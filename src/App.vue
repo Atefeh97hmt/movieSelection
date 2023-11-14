@@ -1,6 +1,5 @@
 <script setup>
 import _ from "lodash";
-import Movie from "./components/Movie.vue";
 
 const movies = [
   {
