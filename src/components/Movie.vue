@@ -1,6 +1,5 @@
 <script setup>
 
-
 defineProps({
   info: Object,
 });
@@ -9,9 +8,9 @@ defineProps({
 
 <template>
   <li
-    style="padding: 5px; margin: 5px; background-color: #dfe7e7; display: flex"
+    style="padding: 5px; margin: 5px; background-color: #dfe7e7; display: flex; width:30%; border: 2px solid #50011e;"
   >
-    <div style="position: relative; width: 30%; height: 250px">
+    <div style="position: relative; width: 40%; height: 100%">
       <img
         style="
           position: absolute;
@@ -27,7 +26,7 @@ defineProps({
         alt="Movie Poster"
       />
     </div>
-    <div style="width: 70%; padding-left: 10px">
+    <div style="width: 60%; padding-left: 10px">
       <p>
         <span style="font-weight: bold; color: #50011e"> Title: </span
         >{{ info.title }}
@@ -38,12 +37,22 @@ defineProps({
       </p>
       <p>
         <span style="font-weight: bold; color: #50011e">Duration: </span
+
+
         >{{ info.duration }}
       </p>
       <p>
         <span style="font-weight: bold; color: #50011e">Release: </span
         >{{ info.release }}
       </p>
+
+
+      <p>
+        <span style="font-weight: bold; color: #50011e">Release: </span>
+        {{ new Date(info.release).getFullYear() }}
+      </p>
+
+
       <p>
         <span style="font-weight: bold; color: #50011e">Tags: </span
         >{{ info.tags.join(", ") }}

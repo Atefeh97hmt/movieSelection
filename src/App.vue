@@ -1,7 +1,7 @@
 <script setup>
 import _ from "lodash";
 import Movie from "./components/Movie.vue";
-
+import { ref, computed } from "vue";
 const movies = [
   {
     imdb_id: "tt7074886",
@@ -103,10 +103,67 @@ const movies = [
     tags: ["Adventure", "Biography", "Comedy"],
   },
 ];
+
+const availableTags = Array.from(
+  new Set(movies.flatMap((movie) => movie.tags))
+);
+
+const selectedTag = ref("");
+
+const filteredMovies = computed(() => {
+  if (!selectedTag.value) {
+    return movies;
+  } else {
+    return movies.filter((movie) => movie.tags.includes(selectedTag.value));
+  }
+});
+
+
 </script>
 
 <template>
-  <ul style="display: flex; flex-wrap: wrap; margin: 5px; list-style: none">
-    <Movie v-for="(item, i) in movies" :key="i" :info="item" />
-  </ul>
+  <div style="display: flex; flex-direction: column">
+    <!-- in this section you can select the category of the movie -->
+    <div style="background-color: #d7edff">
+      <p style="font-size: xx-large; color: brown; text-align: center">
+        in this section you can select the category of the movie
+      </p>
+      <label for="tagFilter">Filter by Tag: </label>
+      <select v-model="selectedTag" id="tagFilter">
+        <option value="">All</option>
+        <option v-for="tag in availableTags" :key="tag" :value="tag">
+          {{ tag }}
+        </option>
+      </select>
+
+      <ul
+        style="
+          display: flex;
+          flex-wrap: wrap;
+          margin: 5px;
+          list-style: none;
+          width: 100%;
+        "
+      >
+        <Movie v-for="(item, i) in filteredMovies" :key="i" :info="item" />
+      </ul>
+    </div>
+
+    <!-- in this section you can see all movies -->
+    <div style="background-color: #f3ffd151; width: 100%">
+      <p style="font-size: xx-large; color: brown; text-align: center">
+        in this section you can see all movies
+      </p>
+      <ul
+        style="
+          display: flex;
+          flex-wrap: wrap;
+          margin: 5px;
+          list-style: none;
+          width: 100%;"
+      >
+        <Movie v-for="(item, i) in movies" :key="i" :info="item" />
+      </ul>
+    </div>
+  </div>
 </template>
